@@ -34,7 +34,11 @@ jobs:
 
             - name: compile-rulesets
               run: |
-                for file in "sources/*"; do if [ -f "$file" ]; then sing-box rule-set compile "$file" fi done
+                for file in "sources/*"; do 
+                    if [ -f "$file" ]; then 
+                        sing-box rule-set compile "$file" 
+                    fi 
+                done
 
             - name: release
               uses: softprops/action-gh-release@v1
