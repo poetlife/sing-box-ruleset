@@ -31,6 +31,7 @@ if __name__ == "__main__":
             path = os.path.join(root, file)
             _, extension = os.path.splitext(path)
             # print(filename, extension)
+            file = file.replace(extension, "")
             source = f"sources/{file}.json"
             output = f"output/{file}.srs"
 
