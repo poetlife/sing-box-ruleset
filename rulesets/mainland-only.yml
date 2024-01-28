@@ -6,3 +6,5 @@ rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-ru
     - nkdyw.com
     - nkdyw.us
     - nkvod.com
+    # 百度相关
+    - baidu.com
