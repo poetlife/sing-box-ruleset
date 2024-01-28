@@ -1,6 +1,7 @@
 import yaml
 import json
 import os
+import subprocess
 
 def convert_yaml_to_json(yaml_file, json_file):
     with open(yaml_file, 'r', encoding="utf-8") as yaml_stream:
@@ -30,5 +31,9 @@ if __name__ == "__main__":
             path = os.path.join(root, file)
             _, extension = os.path.splitext(path)
             # print(filename, extension)
+            source = f"sources/{file}.json"
+            output = f"output/{file}.srs"
+
             if extension in [".yml", ".yaml"]:
-                convert_yaml_to_json(path, f"sources/{file}.json")
+                convert_yaml_to_json(path, source)
+                subprocess.run(f"sing-box rule-set compile {source} -o {output} ", shell=True)

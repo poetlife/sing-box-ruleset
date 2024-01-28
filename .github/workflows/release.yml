@@ -20,21 +20,13 @@ jobs:
                 python -m pip install --upgrade pip
                 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-            - name: convert-yaml2json
-              run: |
-                python convert.py
-
             - name: setup-sing-box
               run: |
                 bash <(curl -fsSL https://sing-box.app/deb-install.sh)
 
             - name: compile-rulesets
               run: |
-                for file in "sources/*"; do 
-                    if [ -f "$file" ]; then 
-                        sing-box rule-set compile "$file" 
-                    fi 
-                done
+                python convert.py
 
             - name: release
               uses: softprops/action-gh-release@v1
