@@ -1,0 +1,8 @@
+# sing-box规则集
+version: 1 # see https://sing-box.sagernet.org/zh/configuration/rule-set/source-format/
+rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
+  - domain_suffix:
+    # 南柯电影网 
+    - nkdyw.com
+    - nkdyw.us
+    - nkvod.com
