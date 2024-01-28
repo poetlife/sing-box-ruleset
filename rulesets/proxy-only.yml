@@ -1,0 +1,15 @@
+# sing-box规则集
+# 该规则集中包含一定不能走中国大陆(含香港、澳门，不含台湾地区)的服务
+version: 1 # see https://sing-box.sagernet.org/zh/configuration/rule-set/source-format/
+rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
+  - domain_suffix:
+    # openai
+    - openai.com
+    - chatgpt.com
+    - oaistatic.com
+    - oaiusercontent.com
+    - chat.openai.com.cdn.cloudflare.net
+    - openaiapi-site.azureedge.net
+    - openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+    - openaicomproductionae4b.blob.core.windows.net
+    - production-openaicom-storage.azureedge.net
