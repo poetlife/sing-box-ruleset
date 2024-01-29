@@ -2,9 +2,17 @@
 version: 1 # see https://sing-box.sagernet.org/zh/configuration/rule-set/source-format/
 rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
   - domain_suffix:
-    # 南柯电影网 
-    - nkdyw.com
-    - nkdyw.us
-    - nkvod.com
-    # 百度相关
-    - baidu.com
+      ########## 资源网站 ##########
+      # 南柯电影网
+      - nkdyw.com
+      - nkdyw.us
+      - nkvod.com
+      ########## END 资源网站 END ##########
+
+      # 百度相关
+      - baidu.com
+
+      ########## tools ##########
+      # 会员音乐解锁
+      - unlock-music.dev
+      ########## END tools END ##########
