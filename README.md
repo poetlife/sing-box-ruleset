@@ -5,6 +5,9 @@ including singbox ruleset
 - [`mainland-only`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/mainland-only.srs) 该部分规则集包含仅能再中国大陆访问的站点
 - [`proxy-only`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/proxy-only.srs) 该规则集包含一定需要proxy的站点
 
+如果使用最新的[clash](https://wiki.metacubex.one/)，则可以使用下面的规则：
+- [`mainland-only`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-mainland-only.yaml) 该部分规则集包含仅能再中国大陆访问的站点
+- [`proxy-only`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-proxy-only.yaml) 该规则集包含一定需要proxy的站点
 
 ##  compile-related
 
@@ -14,6 +17,25 @@ pip install -r requirements.txt
 python convert.py
 ```
 
+##  clash-verge-rev使用示例
+
+```yaml
+# 省略了节点等部分内容
+rule-providers:
+    mainland-only:
+        behavior: classical
+        interval: 259200
+        type: http
+        url: https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-mainland-only.yaml
+    proxy-only:
+        behavior: classical
+        interval: 259200
+        type: http
+        url: https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-proxy-only.yaml
+# 引用集合规则
+rules:
+    - RULE-SET,mainland-only,DIRECT
+```
 
 ## reference 
 1. https://github.com/Chocolate4U/Iran-sing-box-rules/tree/main
