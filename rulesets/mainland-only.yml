@@ -15,4 +15,6 @@ rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-ru
       ########## tools ##########
       # 会员音乐解锁
       - unlock-music.dev
+      # 测试IPv6网站
+      - test-ipv6.com
       ########## END tools END ##########
