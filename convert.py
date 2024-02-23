@@ -3,57 +3,100 @@ import json
 import os
 import subprocess
 
-from typing import List
+from typing import List, Dict
+from loguru import logger
 
 
-class ClassicalClashRuleSet:
+class CommonRuleSet:
+    """通用的规则集"""
+
+    allow_rules: Dict[str, str] = {}  # 允许的规则转换
+
+    extra_fields: Dict = {}  # 额外需要的字段
+
+    rules_key: str = "rules"
+
     def __init__(self) -> None:
         self.rules: List[str] = []
+        self.allow_keys: List[str] = [i for i, _ in self.allow_rules.items()]
 
-    def add_domain_suffix_rule(self, content: str):
-        self.rules.append(f"DOMAIN-SUFFIX,{content}")
+        logger.info(
+            "{name}允许转换的键值: {keys}",
+            keys=self.allow_keys,
+            name=self.__class__.__name__,
+        )
 
-    def batch_add_domain_suffix_rule(self, contents: List[str]):
-        for i in contents:
-            self.add_domain_suffix_rule(i)
+    def parse_rules(self, rules: List[Dict[str, List]]):
+        """解析规则"""
+        for rule in rules:
+            for key, vals in rule.items():
+                if key in self.allow_keys:
+                    self.rules.append({self.allow_rules[key]: vals})
+                else:
+                    logger.info(
+                        "{name}不包含规则集{rule}",
+                        name=self.__class__.__name__,
+                        rule=key,
+                    )
 
-    def to_clash_dict(self) -> dict:
-        tmp = {"payload": self.rules}
+    def to_dict(self) -> Dict:
+        tmp = self.extra_fields.copy()
+        tmp[self.rules_key] = self.rules
         return tmp
 
-    def to_yaml_file(self, path: str):
+    def to_json(self, path: str):
+        raise NotImplementedError
+
+    def to_yaml(self, path: str):
+        raise NotImplementedError
+
+    def to_binary(self, path: str):
+        raise NotImplementedError
+
+
+class SingBoxRuleSet(CommonRuleSet):
+    """sing-box规则集"""
+
+    allow_rules = {"domain_suffix": "domain_suffix"}
+    extra_fields = {"version": 1}
+
+    def to_json(self, path: str):
+        logger.info(
+            "{name}导出为json文件：{file}", name=self.__class__.__name__, file=path
+        )
         with open(path, "w", encoding="utf-8") as f:
-            yaml.dump(self.to_clash_dict(), f)
+            json.dump(self.to_dict(), f, indent=2)
 
-    def from_singbox_rules(self, rules: dict, path: str = ""):
-        if path != "" and rules is None:
-            with open(path, "r", encoding="utf-8") as yaml_stream:
-                rules = yaml.safe_load(yaml_stream)
-
-        if rules.get("version") != 1:
-            raise ValueError("sing-box规则版本不为1")
-        rulesets = rules.get("rules")
-        if rulesets != None:
-            for ruleset in rulesets:
-                if isinstance(ruleset, dict):
-                    for key, val in ruleset.items():
-                        if key == "domain_suffix":
-                            self.batch_add_domain_suffix_rule(val)
-                        else:
-                            raise ValueError(f"不支持的规则类型{key}")
+    def to_binary(self, source_path: str, dst_path: str):
+        logger.info(
+            "{name}导出为sing-box二进制ruleset文件：{source} - {dst}",
+            name=self.__class__.__name__,
+            source=source_path,
+            dst=dst_path,
+        )
+        self.to_json(source_path)
+        subprocess.run(
+            f"sing-box rule-set compile {source_path} -o {dst_path} ", shell=True
+        )
 
 
-def convert_yaml_to_json(yaml_file, json_file):
-    with open(yaml_file, "r", encoding="utf-8") as yaml_stream:
-        # 解析 YAML 文件
-        yaml_data = yaml.safe_load(yaml_stream)
+class ClassicalClashRuleSet(CommonRuleSet):
+    """Clash.Meta Classical规则集"""
 
-    # 将 Python 对象转换为 JSON 格式
-    json_data = json.dumps(yaml_data, indent=2)
+    allow_rules = {
+        "domain_suffix": "DOMAIN-SUFFIX",
+        "ip_cidr": "IP-CIDR",
+        "ip_cidr6": "IP-CIDR6",
+    }
 
-    # 将 JSON 数据写入文件
-    with open(json_file, "w", encoding="utf-8") as json_stream:
-        json_stream.write(json_data)
+    rules_key = "payload"
+
+    def to_yaml(self, path: str):
+        logger.info(
+            "{name}导出为yaml文件：{file}", name=self.__class__.__name__, file=path
+        )
+        with open(path, "w", encoding="utf-8") as f:
+            yaml.dump(self.to_dict(), f)
 
 
 def mkdir(name):
@@ -78,13 +121,17 @@ if __name__ == "__main__":
 
             if extension in [".yml", ".yaml"]:
                 # 编译成sing-box规则
-                convert_yaml_to_json(path, source)
-                subprocess.run(
-                    f"sing-box rule-set compile {source} -o {output} ", shell=True
-                )
-                # 编译成clash规则
-                tmp_clash_rule = ClassicalClashRuleSet()
-                tmp_clash_rule.from_singbox_rules(None, path=path)
-                tmp_clash_rule.to_yaml_file(
-                    f"output/clash-{file}.yaml"
-                )
+                # convert_yaml_to_json(path, source)
+                logger.info("处理文件：{file}", file=file)
+                with open(path, "r", encoding="utf-8") as f:
+                    data = yaml.safe_load(f)
+                # 处理clash.meta规则
+                if data.get("clash", False):
+                    clash_rule = ClassicalClashRuleSet()
+                    clash_rule.parse_rules(data.get("rules"))
+                    clash_rule.to_yaml(f"output/clash-{file}.yaml")
+
+                if data.get("sing-box", False):
+                    singbox_rule = SingBoxRuleSet()
+                    singbox_rule.parse_rules(data.get("rules"))
+                    singbox_rule.to_binary(source_path=source, dst_path=output)
