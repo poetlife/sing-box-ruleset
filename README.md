@@ -8,7 +8,7 @@ including singbox ruleset
 如果使用最新的[clash](https://wiki.metacubex.one/)，则可以使用下面的规则：
 - [`mainland-only`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-mainland-only.yaml) 该部分规则集包含仅能再中国大陆访问的站点
 - [`proxy-only`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-proxy-only.yaml) 该规则集包含一定需要proxy的站点
-- [`cloudflare`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/cloudflare.yaml) 该规则包含了cloudflare的CDN的ip
+- [`cloudflare`](https://github.com/poetlife/sing-box-ruleset/releases/latest/download/clash-cloudflare.yaml) 该规则包含了cloudflare的CDN的ip
 
 ##  compile-related
 
