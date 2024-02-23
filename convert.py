@@ -91,6 +91,20 @@ class ClassicalClashRuleSet(CommonRuleSet):
 
     rules_key = "payload"
 
+    def parse_rules(self, rules: List[Dict[str, List]]):
+        """解析规则"""
+        for rule in rules:
+            for key, vals in rule.items():
+                if key in self.allow_keys:
+                    for val in vals:
+                        self.rules.append(f"{self.allow_rules[key]},{val}")
+                else:
+                    logger.info(
+                        "{name}不包含规则集{rule}",
+                        name=self.__class__.__name__,
+                        rule=key,
+                    )
+
     def to_yaml(self, path: str):
         logger.info(
             "{name}导出为yaml文件：{file}", name=self.__class__.__name__, file=path
