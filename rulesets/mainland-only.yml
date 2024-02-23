@@ -1,5 +1,6 @@
-# sing-box规则集
-version: 1 # see https://sing-box.sagernet.org/zh/configuration/rule-set/source-format/
+# 规则集
+sing-box: true # 是否转换为sing-box规则
+clash: true # 是否转换为clash规则
 rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
   - domain_suffix:
       ########## 资源网站 ##########

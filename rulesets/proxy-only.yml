@@ -1,4 +1,6 @@
-# sing-box规则集
+# 规则集
+sing-box: true # 是否转换为sing-box规则
+clash: true # 是否转换为clash规则
 # 该规则集中包含一定不能走中国大陆(含香港、澳门，不含台湾地区)的服务
 version: 1 # see https://sing-box.sagernet.org/zh/configuration/rule-set/source-format/
 rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
