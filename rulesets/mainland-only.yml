@@ -3,6 +3,12 @@ sing-box: true # 是否转换为sing-box规则
 clash: true # 是否转换为clash规则
 rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
   - domain_suffix:
+      ########## 公司内网/办公域名 ##########
+      # 腾讯办公网域名，仅内网可访问，必须直连不走任何代理
+      # domain_suffix 会同时匹配 woa.com 及其所有子域名，即 *.woa.com
+      - woa.com
+      ########## END 公司内网/办公域名 END ##########
+
       ########## 资源网站 ##########
       # 南柯电影网
       - nkdyw.com
