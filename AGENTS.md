@@ -10,7 +10,7 @@
 - `convert.py`：规则解析、格式转换与调用 `sing-box rule-set compile` 的主脚本
 - `sources/`、`output/`：编译期生成目录（已在 `.gitignore` 忽略）
 - `.github/workflows/release.yml`：CI 编译与 Tag 自动发布流程（保留最近 5 个 release/tag）
-- `pyproject.toml` / `requirements.txt`：Python 依赖与 ruff 代码规范配置（现有 CI 仍兼容 `requirements.txt`）
+- `pyproject.toml` / `uv.lock`：Python 依赖（`uv`）与 `ruff` 代码规范配置（保留 `requirements.txt` 以兼容旧用法）
 
 ```bash
 # 安装依赖（uv）

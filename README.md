@@ -14,8 +14,8 @@ including singbox ruleset
 
 yaml to json and compile rule to binary
 ```bash
-pip install -r requirements.txt
-python convert.py
+uv sync
+uv run python convert.py
 ```
 
 ##  clash-verge-rev使用示例
