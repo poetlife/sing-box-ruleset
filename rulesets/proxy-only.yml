@@ -15,3 +15,29 @@ rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-ru
     - openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
     - openaicomproductionae4b.blob.core.windows.net
     - production-openaicom-storage.azureedge.net
+    # anthropic / claude
+    - anthropic.com
+    - claude.ai
+    - claude.com
+    - claudeusercontent.com
+    # google / gemini
+    - google.com
+    - google.com.hk
+    - google.co.jp
+    - googleapis.com
+    - gstatic.com
+    - googleusercontent.com
+    - googlevideo.com
+    - youtube.com
+    - youtu.be
+    - ytimg.com
+    - ggpht.com
+    - gvt1.com
+    - gvt2.com
+    - gvt3.com
+    - deepmind.com
+    - deepmind.google
+    - withgoogle.com
+    - gmail.com
+    - googlemail.com
+    - recaptcha.net
