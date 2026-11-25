@@ -21,6 +21,9 @@
 
 | 操作内容 | 唯一入口 | 所在文件 |
 |---------|---------|---------|
+| 远程社区规则拉取与多格式解析 | `load_remote_rules` | `remote_rules.py` |
+| 规则块规范化与跨源去重合并 | `merge_rules` | `rule_merger.py` |
+| sing-box / Clash 规则集编译与导出 | `compile_ruleset_file` | `convert.py` |
 
 ## 副作用类（Side Effects）
 

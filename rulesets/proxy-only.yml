@@ -3,9 +3,13 @@ sing-box: true # 是否转换为sing-box规则
 clash: true # 是否转换为clash规则
 # 该规则集中包含一定不能走中国大陆(含香港、澳门，不含台湾地区)的服务
 version: 1 # see https://sing-box.sagernet.org/zh/configuration/rule-set/source-format/
+# 编译时动态拉取并合并去重社区规则（支持 sing-box / clash / metacubex-list / v2fly 格式）
+remote_rules:
+  - url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-!cn.json
+    format: sing-box
 rules: # see https://sing-box.sagernet.org/zh/configuration/rule-set/headless-rule/
   - domain_suffix:
-    # openai
+    # openai（本地补充与兜底，与 remote_rules 自动合并去重）
     - openai.com
     - chatgpt.com
     - oaistatic.com

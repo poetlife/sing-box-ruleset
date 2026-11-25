@@ -42,6 +42,7 @@ uv run pytest
 | SSOT 注册表 | [docs/ssot-registry.md](docs/ssot-registry.md) | 同一件事唯一入口的登记表 |
 | 历史排障记录 | [docs/debugging/registry.md](docs/debugging/registry.md) | 查问题前先检索同质症状 |
 | 持续进化索引 | [docs/evolution/registry.md](docs/evolution/registry.md) | 从事实数据到改进验证的跨周期状态 |
+| 远程社区规则吸收 | [docs/design/remote-rules.md](docs/design/remote-rules.md) | `remote_rules` 拉取、多格式解析、合并去重与容错契约 |
 
 > 功能设计文档位于 `docs/design/`，每个模块一个文件；程序化验证载体与运行入口统一索引于 `docs/evaluation.md`。新增模块时在此表格追加一行。
 
